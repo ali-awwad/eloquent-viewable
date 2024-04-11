@@ -9,13 +9,10 @@ use CyrildeWit\EloquentViewable\Support\Period;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class View extends Model implements ViewContract
 {
-    use Prunable;
-
     /**
      * The attributes that aren't mass assignable.
      *
@@ -97,13 +94,5 @@ class View extends Model implements ViewContract
     public function scopeCollection(Builder $query, string $collection = null)
     {
         return $query->where('collection', $collection);
-    }
-
-    /**
-     * Get the prunable model query.
-     */
-    public function prunable(): Builder
-    {
-        return static::where('viewed_at', '<=', now()->subMonth());
     }
 }
